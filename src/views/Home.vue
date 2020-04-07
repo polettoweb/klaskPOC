@@ -1,18 +1,55 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <img alt="Klask logo" src="../assets/klask.png" />
+    <div class="dashboard"></div>
+    <div v-if="players" class="dashboard__grid">
+      <PlayerDash
+        v-for="player in players"
+        :key="player.id"
+        :name="player.name"
+        :id="player.id"
+      />
+    </div>
+    <div v-else>
+      <p>Please create a new match</p>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
+import PlayerDash from "@/components/PlayerDash";
 export default {
-  name: "Home",
+  name: "Dashboard",
   components: {
-    HelloWorld
+    // HelloWorld
+    PlayerDash
+  },
+  data() {
+    return {
+      players: localStorage.getItem("game")
+        ? JSON.parse(localStorage.getItem("game"))
+        : []
+    };
+  },
+  computed: {
+    numberOfSections() {
+      return this.players.length / 2;
+    }
+  },
+  mounted() {
+    if (localStorage.getItem("game")) {
+      if (this.players.length > 1) {
+        console.log(this.numberOfSections);
+      }
+    }
   }
 };
 </script>
+<style lang="scss">
+.dashboard {
+  &__grid {
+    display: grid;
+  }
+}
+</style>
