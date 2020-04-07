@@ -2,7 +2,7 @@
   <div class="home">
     <img alt="Klask logo" src="../assets/klask.png" />
     <div class="dashboard"></div>
-    <div v-if="players" class="dashboard__grid">
+    <div v-if="players.length" class="dashboard__grid">
       <PlayerDash
         v-for="player in players"
         :key="player.id"
